@@ -1,42 +1,47 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.master.html.twig' %}
 
-{% block title %}Purchase{% endblock %}
+{% block title %}Product!{% endblock %}
+{% block stylesheets %}
+    {% include 'admin.styles.html.twig' %}
+{% endblock %}
+{% block topnav %}
+    {% include 'admin.nav.html.twig' %}
+{% endblock %}    
+{% block content %}
 
-{% block body %}
-    <h1>Purchase</h1>
+    <h3>Purchase</h3>
 
-    <table class="table">
+    <table class="table  table-borderless">
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ purchase.id }}</td>
+                <td><strong>:</strong> {{ purchase.id }}</td>
             </tr>
             <tr>
-                <th>Stock_in</th>
-                <td>{{ purchase.stockIn }}</td>
+                <th>Stock In</th>
+                <td><strong>:</strong> {{ purchase.stockIn }}</td>
             </tr>
             <tr>
-                <th>Stock_left</th>
-                <td>{{ purchase.stockLeft }}</td>
+                <th>Stock Left</th>
+                <td><strong>:</strong> {{ purchase.stockLeft }}</td>
             </tr>
             <tr>
-                <th>Unit_cost</th>
-                <td>{{ purchase.unitCost }}</td>
+                <th>Unit Cost</th>
+                <td><strong>:</strong> &#163;  {{ purchase.unitCost }}</td>
             </tr>
             <tr>
-                <th>Total_cost</th>
-                <td>{{ purchase.totalCost }}</td>
+                <th>Total Cost</th>
+                <td><strong>:</strong> &#163;  {{ purchase.totalCost }}</td>
             </tr>
             <tr>
-                <th>Create_at</th>
-                <td>{{ purchase.createAt ? purchase.createAt|date('Y-m-d') : '' }}</td>
+                <th>Date</th>
+                <td>: {{ purchase.createAt ? purchase.createAt|date('Y-m-d') : '' }}</td>
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('admin_purchase_index') }}">back to list</a>
-
-    <a href="{{ path('admin_purchase_edit', {'id': purchase.id}) }}">edit</a>
-
     {{ include('admin/purchase/_delete_form.html.twig') }}
 {% endblock %}
+
+{% block footer %}
+    {% include 'admin.footer.html.twig' %}
+{% endblock %} 

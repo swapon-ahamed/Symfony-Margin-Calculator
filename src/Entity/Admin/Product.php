@@ -3,6 +3,7 @@
 namespace App\Entity\Admin;
 
 use App\Entity\Admin\Purchase;
+use App\Entity\Admin\Sales;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -40,9 +41,17 @@ class Product
     
     private $purchase;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Admin\Sales", mappedBy="product")
+     */
+    
+    private $sales;
+
     public function __construct()
     {
         $this->purchase = new ArrayCollection();
+        $this->sales = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -119,5 +128,36 @@ class Product
 
     public function __toString(){
         return $this->title;
+    }
+
+    /**
+     * @return Collection|Sales[]
+     */
+    public function getSales(): Collection
+    {
+        return $this->sales;
+    }
+
+    public function addSale(Sales $sale): self
+    {
+        if (!$this->sales->contains($sale)) {
+            $this->sales[] = $sale;
+            $sale->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSale(Sales $sale): self
+    {
+        if ($this->sales->contains($sale)) {
+            $this->sales->removeElement($sale);
+            // set the owning side to null (unless already changed)
+            if ($sale->getProduct() === $this) {
+                $sale->setProduct(null);
+            }
+        }
+
+        return $this;
     }
 }

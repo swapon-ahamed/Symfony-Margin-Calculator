@@ -52,6 +52,10 @@ class PurchaseController extends AbstractController
             $entityManager->persist($purchase);
             $entityManager->flush();
 
+            $this->addFlash(
+                'info',
+                'Added successfully'
+            );
             return $this->redirectToRoute('admin_purchase_index');
         }
 

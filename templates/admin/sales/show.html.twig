@@ -1,0 +1,46 @@
+
+{% extends 'admin.master.html.twig' %}
+
+{% block title %}Product!{% endblock %}
+{% block stylesheets %}
+    {% include 'admin.styles.html.twig' %}
+{% endblock %}
+{% block topnav %}
+    {% include 'admin.nav.html.twig' %}
+{% endblock %}    
+{% block content %}
+
+<h1>Sales</h1>
+
+<table class="table">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td><strong>:</strong>{{ sale.id }}</td>
+        </tr>
+        <tr>
+            <th>Unit Price</th>
+            <td><strong>:</strong> &#163; {{ sale.unitPrice }}</td>
+        </tr>
+        <tr>
+            <th>Quantity</th>
+            <td><strong>:</strong>{{ sale.quantity }}</td>
+        </tr>
+        <tr>
+            <th>Total Price</th>
+            <td><strong>:</strong> &#163; {{ sale.totalPrice }}</td>
+        </tr>
+        <tr>
+            <th>Profit</th>
+            <td><strong>:</strong> &#163; {{ sale.profit }}</td>
+        </tr>
+    </tbody>
+</table>
+
+{{ include('admin/sales/_delete_form.html.twig') }}
+    
+{% endblock %}
+
+{% block footer %}
+    {% include 'admin.footer.html.twig' %}
+{% endblock %} 

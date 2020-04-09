@@ -60,10 +60,14 @@ class ComposerStaticInit92742eb2a6bd1b7c6beb0a39e1c6e15a
             'Symfony\\Component\\Console\\' => 26,
             'Symfony\\Component\\Config\\' => 25,
             'Symfony\\Component\\Cache\\' => 24,
+            'Symfony\\Bundle\\WebProfilerBundle\\' => 33,
             'Symfony\\Bundle\\TwigBundle\\' => 26,
+            'Symfony\\Bundle\\MonologBundle\\' => 29,
             'Symfony\\Bundle\\MakerBundle\\' => 27,
             'Symfony\\Bundle\\FrameworkBundle\\' => 31,
+            'Symfony\\Bundle\\DebugBundle\\' => 27,
             'Symfony\\Bridge\\Twig\\' => 20,
+            'Symfony\\Bridge\\Monolog\\' => 23,
             'Symfony\\Bridge\\Doctrine\\' => 24,
             'Sensio\\Bundle\\FrameworkExtraBundle\\' => 35,
         ),
@@ -75,6 +79,10 @@ class ComposerStaticInit92742eb2a6bd1b7c6beb0a39e1c6e15a
             'Psr\\Cache\\' => 10,
             'PhpParser\\' => 10,
             'PackageVersions\\' => 16,
+        ),
+        'M' => 
+        array (
+            'Monolog\\' => 8,
         ),
         'D' => 
         array (
@@ -248,9 +256,17 @@ class ComposerStaticInit92742eb2a6bd1b7c6beb0a39e1c6e15a
         array (
             0 => __DIR__ . '/..' . '/symfony/cache',
         ),
+        'Symfony\\Bundle\\WebProfilerBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/web-profiler-bundle',
+        ),
         'Symfony\\Bundle\\TwigBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/twig-bundle',
+        ),
+        'Symfony\\Bundle\\MonologBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/monolog-bundle',
         ),
         'Symfony\\Bundle\\MakerBundle\\' => 
         array (
@@ -260,9 +276,17 @@ class ComposerStaticInit92742eb2a6bd1b7c6beb0a39e1c6e15a
         array (
             0 => __DIR__ . '/..' . '/symfony/framework-bundle',
         ),
+        'Symfony\\Bundle\\DebugBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/debug-bundle',
+        ),
         'Symfony\\Bridge\\Twig\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/twig-bridge',
+        ),
+        'Symfony\\Bridge\\Monolog\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/monolog-bridge',
         ),
         'Symfony\\Bridge\\Doctrine\\' => 
         array (
@@ -295,6 +319,10 @@ class ComposerStaticInit92742eb2a6bd1b7c6beb0a39e1c6e15a
         'PackageVersions\\' => 
         array (
             0 => __DIR__ . '/..' . '/ocramius/package-versions/src/PackageVersions',
+        ),
+        'Monolog\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
         'Doctrine\\Persistence\\' => 
         array (

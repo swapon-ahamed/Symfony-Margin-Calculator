@@ -1,34 +1,43 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.master.html.twig' %}
 
-{% block title %}Purchase index{% endblock %}
+{% block title %}Products List!{% endblock %}
+{% block stylesheets %}
+    {% include 'admin.styles.html.twig' %}
+{% endblock %}
+{% block topnav %}
+    {% include 'admin.nav.html.twig' %}
+{% endblock %}    
+{% block content %}
+    {% include 'admin.success.html.twig' %}
 
-{% block body %}
-    <h1>Purchase index</h1>
+    <h3>Purchase List</h3>
 
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Stock_in</th>
-                <th>Stock_left</th>
-                <th>Unit_cost</th>
-                <th>Total_cost</th>
-                <th>Create_at</th>
-                <th>actions</th>
+                <th>Product Name</th>
+                <th>Stock In</th>
+                <th>Stock Left</th>
+                <th>Unit Cost</th>
+                <th>Total Cost</th>
+                <th>Date</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
         {% for purchase in purchases %}
             <tr>
                 <td>{{ purchase.id }}</td>
+                <td>{{ purchase.product.title }}</td>
                 <td>{{ purchase.stockIn }}</td>
                 <td>{{ purchase.stockLeft }}</td>
-                <td>{{ purchase.unitCost }}</td>
-                <td>{{ purchase.totalCost }}</td>
+                <td>&#163; {{ purchase.unitCost }}</td>
+                <td>&#163; {{ purchase.totalCost }}</td>
                 <td>{{ purchase.createAt ? purchase.createAt|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('admin_purchase_show', {'id': purchase.id}) }}">show</a>
-                    <a href="{{ path('admin_purchase_edit', {'id': purchase.id}) }}">edit</a>
+                    <a  class="btn btn-primary" href="{{ path('admin_purchase_show', {'id': purchase.id}) }}">View</a>
+                    
                 </td>
             </tr>
         {% else %}
@@ -39,5 +48,10 @@
         </tbody>
     </table>
 
-    <a href="{{ path('admin_purchase_new') }}">Create new</a>
+    <a class="btn btn-primary" href="{{ path('admin_purchase_new') }}">Create new</a>
+
 {% endblock %}
+
+{% block footer %}
+    {% include 'admin.footer.html.twig' %}
+{% endblock %} 

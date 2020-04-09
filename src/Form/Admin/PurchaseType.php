@@ -18,12 +18,23 @@ class PurchaseType extends AbstractType
     {
         $builder
             ->add('product',EntityType::class,[
-                'class' => Product::class
+                'class' => Product::class,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
-            ->add('stock_in')
+            ->add('stock_in',TextType::class,[
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
             // ->add('stock_in')
             // ->add('stock_left')
-            ->add('unit_cost')
+            ->add('unit_cost',TextType::class,[
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
             // ->add('total_cost')
             // ->add('create_at')
         ;

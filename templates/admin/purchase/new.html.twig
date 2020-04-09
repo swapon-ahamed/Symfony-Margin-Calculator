@@ -1,11 +1,17 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.master.html.twig' %}
 
-{% block title %}New Purchase{% endblock %}
-
-{% block body %}
-    <h1>Create new Purchase</h1>
-
-    {{ include('admin/purchase/_form.html.twig') }}
-
-    <a href="{{ path('admin_purchase_index') }}">back to list</a>
+{% block title %}Products List!{% endblock %}
+{% block stylesheets %}
+    {% include 'admin.styles.html.twig' %}
 {% endblock %}
+{% block topnav %}
+    {% include 'admin.nav.html.twig' %}
+{% endblock %}    
+{% block content %}
+    <h3>Create New Purchase</h3>
+    {{ include('admin/purchase/_form.html.twig') }}
+{% endblock %}
+
+{% block footer %}
+    {% include 'admin.footer.html.twig' %}
+{% endblock %} 

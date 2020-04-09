@@ -1,0 +1,53 @@
+{% extends 'admin.master.html.twig' %}
+
+{% block title %}Products List!{% endblock %}
+{% block stylesheets %}
+    {% include 'admin.styles.html.twig' %}
+{% endblock %}
+{% block topnav %}
+    {% include 'admin.nav.html.twig' %}
+{% endblock %}    
+{% block content %}
+    {% include 'admin.success.html.twig' %}
+
+    <h3>Sales</h3>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Profit</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sale in sales %}
+            <tr>
+                <td>{{ sale.id }}</td>
+                <td>{{ sale.unitPrice }}</td>
+                <td>{{ sale.quantity }}</td>
+                <td>&#163; {{ sale.totalPrice }}</td>
+                <td>&#163; {{ sale.profit }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('admin_sales_show', {'id': sale.id}) }}">View</a>
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('admin_sales_new') }}">Create new</a>
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'admin.footer.html.twig' %}
+{% endblock %} 

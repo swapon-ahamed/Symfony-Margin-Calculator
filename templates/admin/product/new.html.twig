@@ -1,0 +1,17 @@
+{% extends 'admin.master.html.twig' %}
+
+{% block title %}Products List!{% endblock %}
+{% block stylesheets %}
+    {% include 'admin.styles.html.twig' %}
+{% endblock %}
+{% block topnav %}
+    {% include 'admin.nav.html.twig' %}
+{% endblock %}    
+{% block content %}
+    <h1>Create new Product</h1>
+    {{ include('admin/product/_form.html.twig') }}
+{% endblock %}
+
+{% block footer %}
+    {% include 'admin.footer.html.twig' %}
+{% endblock %} 

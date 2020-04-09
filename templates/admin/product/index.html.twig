@@ -1,0 +1,50 @@
+{% extends 'admin.master.html.twig' %}
+
+{% block title %}Products List!{% endblock %}
+{% block stylesheets %}
+    {% include 'admin.styles.html.twig' %}
+{% endblock %}
+{% block topnav %}
+    {% include 'admin.nav.html.twig' %}
+{% endblock %}    
+{% block content %}
+    {% include 'admin.success.html.twig' %}
+    <h3>Products</h3> 
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Created Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.title }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.createAt ? product.createAt|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('admin_product_show', {'id': product.id}) }}">View</a>
+                    <a class="btn btn-success" href="{{ path('admin_product_edit', {'id': product.id}) }}">Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('admin_product_new') }}">Create new</a>
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'admin.footer.html.twig' %}
+{% endblock %} 

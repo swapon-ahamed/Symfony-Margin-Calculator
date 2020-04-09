@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Purchase{% endblock %}
+
+{% block body %}
+    <h1>Purchase</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ purchase.id }}</td>
+            </tr>
+            <tr>
+                <th>Stock_in</th>
+                <td>{{ purchase.stockIn }}</td>
+            </tr>
+            <tr>
+                <th>Stock_left</th>
+                <td>{{ purchase.stockLeft }}</td>
+            </tr>
+            <tr>
+                <th>Unit_cost</th>
+                <td>{{ purchase.unitCost }}</td>
+            </tr>
+            <tr>
+                <th>Total_cost</th>
+                <td>{{ purchase.totalCost }}</td>
+            </tr>
+            <tr>
+                <th>Create_at</th>
+                <td>{{ purchase.createAt ? purchase.createAt|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_purchase_index') }}">back to list</a>
+
+    <a href="{{ path('admin_purchase_edit', {'id': purchase.id}) }}">edit</a>
+
+    {{ include('admin/purchase/_delete_form.html.twig') }}
+{% endblock %}

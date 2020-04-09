@@ -1,0 +1,43 @@
+
+{% extends 'admin.master.html.twig' %}
+
+{% block title %}Product!{% endblock %}
+{% block stylesheets %}
+    {% include 'admin.styles.html.twig' %}
+{% endblock %}
+{% block topnav %}
+    {% include 'admin.nav.html.twig' %}
+{% endblock %}    
+{% block content %}
+
+   <h3>Product</h3>
+
+    <table class="table  table-borderless">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>: {{ product.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>: {{ product.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>: {{ product.description }}</td>
+            </tr>
+            <tr>
+                <th>Create_at</th>
+                <td>: {{ product.createAt ? product.createAt|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-danger">{{ include('admin/product/_delete_form.html.twig') }}</a>
+
+    
+{% endblock %}
+
+{% block footer %}
+    {% include 'admin.footer.html.twig' %}
+{% endblock %} 

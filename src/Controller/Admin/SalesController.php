@@ -49,6 +49,7 @@ class SalesController extends AbstractController
                                     ['product' => $product_id , 'status' => 1],
                                     ['id' => 'ASC']
                                 );
+
             $profit = 0;
             $total  = 0;
             if(count($purchases) > 0 ){
@@ -56,6 +57,7 @@ class SalesController extends AbstractController
                 foreach ($purchases as $purchase) {
                    $purchase_unit_cost  = $purchase->getUnitCost();
                    $purchase_stock_left = $purchase->getStockLeft();
+
                    if( $sale_quantity >= $purchase_stock_left && count($purchases) > 1 ){
 
                         $profit     = Sales::calculateProfit(
@@ -76,7 +78,7 @@ class SalesController extends AbstractController
                         $entityManager->persist($purchase);
 
                         $sale_quantity = $sale_quantity - $purchase_stock_left;
-                   }else if($purchase_stock_left > 0 && $sale_quantity <= $purchase_stock_left ){
+                   }else if( $sale_quantity <= $purchase_stock_left ){
 
                     $rest_of_stock       = $purchase_stock_left - $sale_quantity;
                     $purchase->setStockLeft($rest_of_stock);

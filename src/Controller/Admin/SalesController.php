@@ -50,6 +50,7 @@ class SalesController extends AbstractController
                                     ['id' => 'ASC']
                                 );
             $profit = 0;
+            $total  = 0;
             if(count($purchases) > 0 ){
 
                 foreach ($purchases as $purchase) {
@@ -63,8 +64,10 @@ class SalesController extends AbstractController
                             $purchase_unit_cost
                         );
 
-                        
-                        $sale->setTotalPrice($sale_unit_price * $sale_quantity );
+
+                        $total = $sale_unit_price * $purchase_stock_left;
+
+                        $sale->setTotalPrice($total);
                         $sale->setProfit($profit);
                         $purchase->setStatus(0);
                         $purchase->setStockLeft(0);
@@ -87,9 +90,9 @@ class SalesController extends AbstractController
                             $sale_quantity,
                             $purchase_unit_cost
                         );
-
+                    $total += $sale_unit_price * $sale_quantity;
                     $sale->setProfit($profit);
-                    $sale->setTotalPrice($sale_unit_price * $sale_quantity );
+                    $sale->setTotalPrice($total);
                     $entityManager->persist($sale);
                     $entityManager->persist($purchase);
 

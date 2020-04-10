@@ -28,6 +28,11 @@ class Purchase
     private $stock_left;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $status;
+
+    /**
      * @ORM\Column(type="decimal", precision=10, scale=0)
      */
     private $unit_cost;
@@ -57,6 +62,18 @@ class Purchase
     public function getStockIn(): ?int
     {
         return $this->stock_in;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
     }
 
     public function setStockIn(int $stock_in): self

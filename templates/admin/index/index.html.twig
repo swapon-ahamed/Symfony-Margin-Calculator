@@ -1,6 +1,6 @@
 {% extends 'admin.master.html.twig' %}
 
-{% block title %}Hello IndexController!{% endblock %}
+{% block title %}Dashboard{% endblock %}
 {% block stylesheets %}
     {% include 'admin.styles.html.twig' %}
 {% endblock %}
@@ -11,6 +11,8 @@
 
 <div class="example-wrapper">
     <h3>Dashboard</h3>
+    <h4><strong>Total Profit: &#163; {{ totalProfit }}</strong></h4>
+    <a href="/admin/sales">See Details</a>
 </div>
 {% endblock %}
 

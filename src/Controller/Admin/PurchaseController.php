@@ -42,6 +42,7 @@ class PurchaseController extends AbstractController
             $per_unit = $purchase->getUnitCost();
             $totalCost = $stock_in * $per_unit;
             $purchase->setTotalCost($totalCost);
+            $purchase->setStatus(1);
 
             $today = new \DateTime("now");
             $purchase->setCreateAt($today);

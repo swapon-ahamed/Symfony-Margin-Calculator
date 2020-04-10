@@ -32,7 +32,7 @@ class SalesController extends AbstractController
     /**
      * @Route("/new", name="admin_sales_new", methods={"GET","POST"})
      */
-    public function new(Request $request, ProductRepository $productRepository): Response
+    public function new(Request $request): Response
     {
         $sale = new Sales();
         $form = $this->createForm(SalesType::class, $sale);
@@ -46,20 +46,53 @@ class SalesController extends AbstractController
 
             $entityManager   = $this->getDoctrine()->getManager();
             $purchase        = $entityManager->getRepository(Purchase::class)->findOneBy(
-                                    ['product' => 1],
+                                    ['product' => $product_id , 'status' => 1],
                                     ['id' => 'ASC']
                                 );
+            if(!is_null($purchase)){
+                $purchase_unit_cost  = $purchase->getUnitCost();
+                $purchase_stock_left = $purchase->getStockLeft();
+                
+                $profit              = Sales::calculateProfit(
+                                            $sale_unit_price,
+                                            $sale_quantity,
+                                            $purchase_unit_cost
+                                        );
 
-            $purchase_unit_cost  = $purchase->getUnitCost();
-            $purchase_stock_left = $purchase->getStockLeft();
+                $sale->setTotalPrice($sale_unit_price * $sale_quantity );
+                $sale->setProfit($profit );
 
-            $profit              = Sales::calculateProfit(
-                                        $sale_unit_price,
-                                        $sale_quantity,
-                                        $purchase_unit_cost
-                                    );
-           echo $profit ; die();
-            $entityManager->persist($sale);
+                if($purchase_stock_left > 0 && $sale_quantity <= $purchase_stock_left ){
+
+                    $rest_of_stock       = $purchase_stock_left - $sale_quantity;
+                    $purchase->setStockLeft($rest_of_stock);
+                     $status = 1;
+                    if($rest_of_stock  == 0){
+                        $status = 0;
+                    }
+                    $purchase->setStatus($status);
+                    $entityManager->persist($sale);
+                    $entityManager->persist($purchase);
+
+                    $this->addFlash(
+                        'info',
+                        'Sale added successfully'
+                    );
+
+                }else{
+
+                   $this->addFlash(
+                       'fail',
+                       'Out of stock!'
+                   ); 
+                }
+
+            }else{
+               $this->addFlash(
+                   'fail',
+                   'Out of stock!'
+               );  
+            }
             $entityManager->flush();
 
             return $this->redirectToRoute('admin_sales_index');

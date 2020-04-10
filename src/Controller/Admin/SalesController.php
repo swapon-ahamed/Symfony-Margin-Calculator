@@ -50,12 +50,12 @@ class SalesController extends AbstractController
                                     ['id' => 'ASC']
                                 );
             $profit = 0;
-            if(!is_null($purchases)){
+            if(count($purchases) > 0 ){
 
                 foreach ($purchases as $purchase) {
                    $purchase_unit_cost  = $purchase->getUnitCost();
                    $purchase_stock_left = $purchase->getStockLeft();
-                   if($sale_quantity >= $purchase_stock_left){
+                   if( $sale_quantity >= $purchase_stock_left && count($purchases) > 1 ){
 
                         $profit     = Sales::calculateProfit(
                             $sale_unit_price,
@@ -89,6 +89,7 @@ class SalesController extends AbstractController
                         );
 
                     $sale->setProfit($profit);
+                    $sale->setTotalPrice($sale_unit_price * $sale_quantity );
                     $entityManager->persist($sale);
                     $entityManager->persist($purchase);
 
@@ -105,6 +106,11 @@ class SalesController extends AbstractController
                        ); 
                     }
                 }
+            }else{
+               $this->addFlash(
+                   'fail',
+                   'Out of stock!'
+               );  
             }
 
             $entityManager->flush();

@@ -1,0 +1,79 @@
+https://stackoverflow.com/questions/48424734/calculate-the-exact-margin-from-sales-orders-and-purchase-orders/48450032
+
+
+table: Products
+===============
+id
+title
+description
+createdDate
+
+
+table: purchase
+================
+id
+product_id
+stock_in
+stock_left
+unit_cost
+total_cost
+create_at
+
+table: sale
+============
+id
+product_id
+unit_price
+quantity
+total_price
+profit
+
+
+syfony:
+=======
+ $ composer create-project symfony/skeleton: margine-calculator
+ $ composer req twig [ twig templagte]
+ $ composer require doctrine [ database ]
+ $ composer require maker [ fast way to create controller, form etc]
+ $ php bin/console debug:router  
+ $ composer require form
+
+
+ how to create controller:
+ step: php bin/console make:controller
+  > HomeController
+
+  database:
+  ========
+$ php bin/console make: entity
+> title
+> description
+
+
+CRUD
+====
+$ composer require security-csrf
+$ composer require form validator annotations 
+$ php bin/console make:entity
+> Product
+$ php bin/console doctrine:schema:update --force
+$ php bin/console make:crud
+-> Product
+
+
+create table:
+============
+
+$ php bin/console doctrine:schema:create --dump-sql
+$ php bin/console doctrine:schema:create
+
+$ php bin/console doctrine:schema:update --force
+
+
+relationship [OneToMany and ManyToOne]
+=======================================
+$ php bin/console make:entity --regenerate [relationship]
+ > enter
+
+$ php bin/console doctrine:schema:create --dump-sql
+$ php bin/console doctrine:schema:update --force

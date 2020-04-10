@@ -45,32 +45,50 @@ class SalesController extends AbstractController
             $sale_quantity   = $sale->getQuantity();
 
             $entityManager   = $this->getDoctrine()->getManager();
-            $purchase        = $entityManager->getRepository(Purchase::class)->findOneBy(
+            $purchases        = $entityManager->getRepository(Purchase::class)->findBy(
                                     ['product' => $product_id , 'status' => 1],
                                     ['id' => 'ASC']
                                 );
-            if(!is_null($purchase)){
-                $purchase_unit_cost  = $purchase->getUnitCost();
-                $purchase_stock_left = $purchase->getStockLeft();
-                
-                $profit              = Sales::calculateProfit(
-                                            $sale_unit_price,
-                                            $sale_quantity,
-                                            $purchase_unit_cost
-                                        );
+            $profit = 0;
+            if(!is_null($purchases)){
 
-                $sale->setTotalPrice($sale_unit_price * $sale_quantity );
-                $sale->setProfit($profit );
+                foreach ($purchases as $purchase) {
+                   $purchase_unit_cost  = $purchase->getUnitCost();
+                   $purchase_stock_left = $purchase->getStockLeft();
+                   if($sale_quantity >= $purchase_stock_left){
 
-                if($purchase_stock_left > 0 && $sale_quantity <= $purchase_stock_left ){
+                        $profit     = Sales::calculateProfit(
+                            $sale_unit_price,
+                            $purchase_stock_left,
+                            $purchase_unit_cost
+                        );
+
+                        
+                        $sale->setTotalPrice($sale_unit_price * $sale_quantity );
+                        $sale->setProfit($profit);
+                        $purchase->setStatus(0);
+                        $purchase->setStockLeft(0);
+
+                        $entityManager->persist($sale);
+                        $entityManager->persist($purchase);
+
+                        $sale_quantity = $sale_quantity - $purchase_stock_left;
+                   }else if($purchase_stock_left > 0 && $sale_quantity <= $purchase_stock_left ){
 
                     $rest_of_stock       = $purchase_stock_left - $sale_quantity;
                     $purchase->setStockLeft($rest_of_stock);
-                     $status = 1;
+
                     if($rest_of_stock  == 0){
-                        $status = 0;
+                        $purchase->setStatus(0);
                     }
-                    $purchase->setStatus($status);
+
+                    $profit     += Sales::calculateProfit(
+                            $sale_unit_price,
+                            $sale_quantity,
+                            $purchase_unit_cost
+                        );
+
+                    $sale->setProfit($profit);
                     $entityManager->persist($sale);
                     $entityManager->persist($purchase);
 
@@ -81,20 +99,15 @@ class SalesController extends AbstractController
 
                 }else{
 
-                   $this->addFlash(
-                       'fail',
-                       'Out of stock!'
-                   ); 
+                       $this->addFlash(
+                           'fail',
+                           'Out of stock!'
+                       ); 
+                    }
                 }
-
-            }else{
-               $this->addFlash(
-                   'fail',
-                   'Out of stock!'
-               );  
             }
-            $entityManager->flush();
 
+            $entityManager->flush();
             return $this->redirectToRoute('admin_sales_index');
         }
 
